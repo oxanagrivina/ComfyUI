@@ -2,6 +2,7 @@ services:
   comfyui:
     build: .
     container_name: comfyui
+    command: python main.py --listen 0.0.0.0 --port 8188
     ports:
       - "8188:8188"
     volumes:
