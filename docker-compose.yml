@@ -1,6 +1,6 @@
 services:
   comfyui:
-    image: ghcr.io/comfy-org/comfyui:latest
+    build: .
     container_name: comfyui
     ports:
       - "8188:8188"
