@@ -1,0 +1,9 @@
+services:
+  comfyui:
+    image: ghcr.io/comfy-org/comfyui:latest
+    container_name: comfyui
+    ports:
+      - "8188:8188"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
