@@ -1,10 +1,20 @@
 services:
   comfyui:
-    build: .
+    image: python:3.10-slim
     container_name: comfyui
-    command: python main.py --listen 0.0.0.0 --port 8188
+    working_dir: /app
+    command: >
+      bash -c "
+      apt update &&
+      apt install -y git &&
+      git clone https://github.com/Comfy-Org/ComfyUI.git . &&
+      pip install --no-cache-dir -r requirements.txt &&
+      python main.py --listen 0.0.0.0 --port 8188 --cpu
+      "
     ports:
       - "8188:8188"
-    volumes:
-      - ./data:/data
+    environment:
+      - CUDA_VISIBLE_DEVICES=
+      - COMFYUI_DISABLE_CUDA=1
+      - GOOGLE_API_KEY=твой_google_api_key
     restart: unless-stopped
