@@ -4,13 +4,17 @@ services:
     container_name: comfyui
     working_dir: /app
     command: >
-      bash -c "
-      apt update &&
-      apt install -y git &&
-      git clone https://github.com/Comfy-Org/ComfyUI.git . &&
-      pip install --no-cache-dir -r requirements.txt &&
-      python main.py --listen 0.0.0.0 --port 8188 --cpu
-      "
+  bash -c "
+  apt-get update &&
+  apt-get install -y git &&
+  if [ ! -f /app/main.py ]; then
+    rm -rf /app/* /app/.[!.]* /app/..?* 2>/dev/null || true
+    git clone https://github.com/Comfy-Org/ComfyUI.git /app
+  fi &&
+  pip install --no-cache-dir -r /app/requirements.txt &&
+  python /app/main.py --listen 0.0.0.0 --port 8188 --cpu
+  "
+
     ports:
       - "8188:8188"
     environment:
