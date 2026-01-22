@@ -1,13 +1,17 @@
 services:
   comfyui:
-    image: ghcr.io/comfyanonymous/comfyui:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: comfyui
     command: >
       python main.py
       --listen 0.0.0.0
       --port 8188
       --cpu
-    restart: unless-stopped
     ports:
       - "8188:8188"
-
+    volumes:
+      - ./models:/app/models
+      - ./output:/app/output
+    restart: unless-stopped
