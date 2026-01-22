@@ -1,16 +1,13 @@
-version: "3.9"
-
 services:
   comfyui:
-    image: python:3.10-slim
+    image: ghcr.io/comfyanonymous/comfyui:latest
     container_name: comfyui
-    working_dir: /app
-    volumes:
-      - ./:/app
     command: >
-      bash -c "
-      pip install --no-cache-dir -r requirements.txt &&
-      python main.py --listen 0.0.0.0 --port 8188 --cpu
-      "
+      python main.py
+      --listen 0.0.0.0
+      --port 8188
+      --cpu
+    restart: unless-stopped
     ports:
       - "8188:8188"
+
