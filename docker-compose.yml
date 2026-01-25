@@ -12,8 +12,9 @@ services:
     ports:
       - "8188:8188"
     volumes:
-      - .models:/app/models
-      - .output:/app/output
-      - .custom_nodes:/app/custom_nodes
-      - .user:/app/user
+      - ..data/models:/app/models
+      - ..data/output:/app/output
+      - ..data/custom_nodes:/app/custom_nodes
+      - ..data/user:/app/user
+      - ..data/input:/app/intput
     restart: unless-stopped
