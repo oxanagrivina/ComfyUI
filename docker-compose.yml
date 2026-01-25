@@ -12,8 +12,8 @@ services:
     ports:
       - "8188:8188"
     volumes:
-      - /var/comfyui/models:/app/models
-      - /var/comfyui/output:/app/output
-      - /var/comfyui/custom_nodes:/app/custom_nodes
-      - /var/comfyui/user:/app/user
+      - .models:/app/models
+      - .output:/app/output
+      - .custom_nodes:/app/custom_nodes
+      - .user:/app/user
     restart: unless-stopped
