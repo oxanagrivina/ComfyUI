@@ -18,7 +18,4 @@ services:
       - ../data/user:/app/user
       - ../data/input:/app/input
       - ../data/libs:/app/libs
-    environment:
-      - PYTHONPATH=/app/libs
-      - PIP_TARGET=/app/libs
     restart: unless-stopped
