@@ -17,4 +17,5 @@ services:
       - ../data/custom_nodes:/app/custom_nodes
       - ../data/user:/app/user
       - ../data/input:/app/input
+      - ../data/libs:/app/libs
     restart: unless-stopped
