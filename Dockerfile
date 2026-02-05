@@ -16,4 +16,4 @@ RUN pip install --upgrade pip \
 
 EXPOSE 8188
 
-CMD ["python", "main.py", "--listen", "0.0.0.0"]
+CMD ["python", "main.py", "--listen", "0.0.0.0", "--cpu"]
