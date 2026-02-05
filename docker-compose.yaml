@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   comfyui:
-    image: oxanagrivina/ComfyUI:latest
+    image: oxanagrivina/comfyui:latest
     container_name: comfyui
     # Эта команда ставит библиотеки ПЕРЕД запуском самого ComfyUI
     command: bash -c "pip install GitPython opencv-python-headless onnxruntime && python main.py --listen 0.0.0.0 --cpu"
