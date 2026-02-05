@@ -1,23 +1,21 @@
 services:
   comfyui:
-    image: 'python:3.10-slim'
+    build: .
     container_name: comfyui
-    # ТОЖЕ САМОЕ, ЧТО И БЫЛО
+    # Только то, что нужно вашим нодам, и запуск. Всё.
     command: >
-      bash -c "apt-get update && apt-get install -y git && 
-      if [ ! -f main.py ]; then git clone https://github.com/comfyanonymous/ComfyUI.git . ; fi && 
-      pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu && 
-      pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime && 
-      python main.py --listen 0.0.0.0 --cpu"
+      bash -c "pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime 
+      && python main.py --listen 0.0.0.0 --cpu"
+    ports:
+      - "8188:8188"
     volumes:
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/models:/app/models
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/custom_nodes:/app/custom_nodes
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/input:/app/input
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/output:/app/output
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/user:/app/user
-    working_dir: /app
-    ports:
-      - "8188:8188"
     environment:
       - CUDA_VISIBLE_DEVICES=-1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     restart: always
