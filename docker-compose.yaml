@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  comfyui:
+    image: oxanagrivina/ComfyUI:latest
+    container_name: comfyui
+    # Эта команда ставит библиотеки ПЕРЕД запуском самого ComfyUI
+    command: bash -c "pip install GitPython opencv-python-headless onnxruntime && python main.py --listen 0.0.0.0 --cpu"
+    ports:
+      - "8188:8188"
+    volumes:
+      - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/models:/app/models
+      - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/custom_nodes:/app/custom_nodes
+      - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/input:/app/input
+      - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/output:/app/output
+      - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/user:/app/user
+    environment:
+      - CUDA_VISIBLE_DEVICES=-1
+    restart: always
