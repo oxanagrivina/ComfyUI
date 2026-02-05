@@ -4,12 +4,12 @@ services:
     container_name: comfyui
     # ТОЖЕ САМОЕ, ЧТО И БЫЛО
     command: >
-      bash -c "pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu 
-      && pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime 
-      && python main.py --listen 0.0.0.0 --cpu"
-    # ВОТ ОНО СЕКРЕТНОЕ ОРУЖИЕ:
+      bash -c "
+      if [ ! -f main.py ]; then git clone https://github.com/comfyanonymous/ComfyUI.git . ; fi && 
+      pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu && 
+      pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime && 
+      python main.py --listen 0.0.0.0 --cpu"
     volumes:
-      - .:/app  # <-- ЭТА СТРОЧКА ГОВОРИТ: "ВСЕ ФАЙЛЫ ИЗ ГИТА ПОЛОЖИ В /app"
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/models:/app/models
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/custom_nodes:/app/custom_nodes
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/input:/app/input
