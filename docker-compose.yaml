@@ -1,8 +1,6 @@
 services:
   comfyui:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: oxanagrivina/comfyui:latest
     container_name: comfyui
     # Это "чистая" команда: она доставляет только то, чего не хватает в образе,
     # и сразу запускает сервер. Это не слетает при обновлениях.
