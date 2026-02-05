@@ -1,28 +1,23 @@
 services:
   comfyui:
-    # Используем самый легкий образ в мире
     image: 'python:3.10-slim'
     container_name: comfyui
-    # Устанавливаем только нужное и запускаем. Pip не будет качать Torсh заново, 
-    # так как он уже есть в системе сервера или скачается один раз быстро.
+    # ТОЖЕ САМОЕ, ЧТО И БЫЛО
     command: >
       bash -c "pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu 
       && pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime 
       && python main.py --listen 0.0.0.0 --cpu"
-    ports:
-      - "8188:8188"
+    # ВОТ ОНО СЕКРЕТНОЕ ОРУЖИЕ:
     volumes:
+      - .:/app  # <-- ЭТА СТРОЧКА ГОВОРИТ: "ВСЕ ФАЙЛЫ ИЗ ГИТА ПОЛОЖИ В /app"
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/models:/app/models
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/custom_nodes:/app/custom_nodes
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/input:/app/input
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/output:/app/output
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/user:/app/user
-      # Используем папку с кодом ComfyUI, которую я подготовил
-      - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/comfy_core:/app
     working_dir: /app
+    ports:
+      - "8188:8188"
     environment:
       - CUDA_VISIBLE_DEVICES=-1
-      # Добавьте свои ключи сюда, если еще не добавили в интерфейсе Coolify
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
     restart: always
