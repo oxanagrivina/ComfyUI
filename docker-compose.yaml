@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   comfyui:
+    build:
+      context: .
     image: oxanagrivina/comfyui:latest
     container_name: comfyui
     # Эта команда ставит библиотеки ПЕРЕД запуском самого ComfyUI
