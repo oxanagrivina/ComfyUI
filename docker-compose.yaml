@@ -1,11 +1,13 @@
 services:
   comfyui:
-    # Используем официальный проверенный образ, он скачается за 20 секунд
-    image: 'pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime'
+    # Используем самый легкий образ в мире
+    image: 'python:3.10-slim'
     container_name: comfyui
-    # Эта команда скачает ComfyUI и все ноды ПРИ ЗАПУСКЕ (из вольюмов)
+    # Устанавливаем только нужное и запускаем. Pip не будет качать Torсh заново, 
+    # так как он уже есть в системе сервера или скачается один раз быстро.
     command: >
-      bash -c "pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime 
+      bash -c "pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu 
+      && pip install --no-cache-dir GitPython toml matplotlib rich scikit-image opencv-python-headless onnxruntime 
       && python main.py --listen 0.0.0.0 --cpu"
     ports:
       - "8188:8188"
@@ -15,9 +17,12 @@ services:
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/input:/app/input
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/output:/app/output
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/user:/app/user
-      # Мы монтируем корень приложения, чтобы ComfyUI был на месте
+      # Используем папку с кодом ComfyUI, которую я подготовил
       - /data/coolify/applications/w4ksocso4kc4g4k8wwgw884w/comfy_core:/app
     working_dir: /app
     environment:
       - CUDA_VISIBLE_DEVICES=-1
+      # Добавьте свои ключи сюда, если еще не добавили в интерфейсе Coolify
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     restart: always
